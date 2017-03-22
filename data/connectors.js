@@ -2,6 +2,8 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 
+import rp from 'request-promise';
+
 const db = new Sequelize('blog', null, null, {
   dialect: 'sqlite',
   storage: './blog.sqlite',
@@ -21,6 +23,7 @@ AuthorModel.hasMany(PostModel);
 PostModel.belongsTo(AuthorModel);
 
 // create mock data with a seed, so we always get the same
+/*
 casual.seed(123);
 db.sync({ force: true }).then(() => {
   _.times(10, () => {
@@ -35,8 +38,19 @@ db.sync({ force: true }).then(() => {
     });
   });
 });
+*/
+
+const FortuneCookie = {
+  getOne(id) {
+    return rp('http://62.14.219.13:8280/replan/projects/'+id)
+      .then((res) => JSON.parse(res))
+      .then((res) => {
+        return res.description;
+      });
+  },
+};
 
 const Author = db.models.author;
 const Post = db.models.post;
 
-export { Author, Post };
+export { Author, Post, FortuneCookie };

@@ -1,4 +1,4 @@
-import { Author } from './connectors';
+import { Author, FortuneCookie} from './connectors';
 
 const resolvers = {
   Query: {
@@ -7,6 +7,9 @@ const resolvers = {
     },
     getAuthors(_, args) {
       return Author.findAll({ attributes: args});
+    },
+    getFortuneCookie(_, args) {
+      return FortuneCookie.getOne(args.id);
     },
   },
   Author: {
