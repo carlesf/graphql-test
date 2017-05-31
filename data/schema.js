@@ -1,28 +1,26 @@
 const typeDefinitions = `
-type Author {
-  id: Int
-  firstName: String
-  lastName: String
-  posts: [Post]
-}
+type GeographicalCoordinate {
+		latitude: String!
+		longitude: String!
+	}
 
-type Post {
-  id: Int
-  title: String
-  text: String
-  views: Int
-  author: Author
-}
+  type BicingStation {
+		coordinate: GeographicalCoordinate!
+		id: Int!
+		type: String!
+		streetName: String!
+		streetNumber: Int!
+		altitude: Int!
+		slots: Int!
+		bikes: Int!
+		status:String!
+		nearbyStations: [BicingStation]
+	}
 
 type Query {
-  getAuthors: [Author]
-  author(firstName: String, lastName: String): Author
-  getFortuneCookie(id: String!): String
-}
-
-schema {
-  query: Query
-}
+		getAllBicingStations: [BicingStation]
+    getBicingStationById (id: Int!): BicingStation
+  }
 `;
 
 export default [typeDefinitions];
