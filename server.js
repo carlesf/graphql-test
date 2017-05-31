@@ -32,8 +32,35 @@ graphQLServer.use('/graphql', bodyParser.json(), apolloExpress({
 
 graphQLServer.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
+  query: `# Welcome to GraphiQL
+query allBicingStations {
+  getAllBicingStations {
+    id
+    streetName
+    streetNumber
+    bikes
+  }
+}
+query findBicingStation_35  {
+  getBicingStationById (id: 35) {
+    id
+    bikes
+    nearbyStations {
+      id
+      coordinate {
+        longitude
+        latitude
+      }
+      bikes
+      nearbyStations {
+        id
+        bikes
+      }
+    }
+  }
+}`,
 }));
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(
-  `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphiql`
+  `View GraphiQL at http://localhost:${GRAPHQL_PORT}/graphiql`
 ));
